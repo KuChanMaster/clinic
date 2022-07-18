@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swjd.mapper.MedicineMapper" >
+  <resultMap id="BaseResultMap" type="com.swjd.pojo.Medicine" >
+    <id column="mno" property="mno" jdbcType="INTEGER" />
+    <result column="mname" property="mname" jdbcType="VARCHAR" />
+    <result column="mstyle" property="mstyle" jdbcType="CHAR" />
+    <result column="mprice" property="mprice" jdbcType="INTEGER" />
+    <result column="selfpercent" property="selfpercent" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mno, mname, mstyle, mprice, selfpercent
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.swjd.pojo.MedicineExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from medicine
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where mno = #{mno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from medicine
+    where mno = #{mno,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.swjd.pojo.MedicineExample" >
+    delete from medicine
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.swjd.pojo.Medicine" >
+    insert into medicine (mno, mname, mstyle, 
+      mprice, selfpercent)
+    values (#{mno,jdbcType=INTEGER}, #{mname,jdbcType=VARCHAR}, #{mstyle,jdbcType=CHAR}, 
+      #{mprice,jdbcType=INTEGER}, #{selfpercent,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.swjd.pojo.Medicine" useGeneratedKeys="true" keyProperty="mno">
+    insert into medicine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mno != null" >
+        mno,
+      </if>
+      <if test="mname != null" >
+        mname,
+      </if>
+      <if test="mstyle != null" >
+        mstyle,
+      </if>
+      <if test="mprice != null" >
+        mprice,
+      </if>
+      <if test="selfpercent != null" >
+        selfpercent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mno != null" >
+        #{mno,jdbcType=INTEGER},
+      </if>
+      <if test="mname != null" >
+        #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="mstyle != null" >
+        #{mstyle,jdbcType=CHAR},
+      </if>
+      <if test="mprice != null" >
+        #{mprice,jdbcType=INTEGER},
+      </if>
+      <if test="selfpercent != null" >
+        #{selfpercent,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.swjd.pojo.MedicineExample" resultType="java.lang.Integer" >
+    select count(*) from medicine
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update medicine
+    <set >
+      <if test="record.mno != null" >
+        mno = #{record.mno,jdbcType=INTEGER},
+      </if>
+      <if test="record.mname != null" >
+        mname = #{record.mname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mstyle != null" >
+        mstyle = #{record.mstyle,jdbcType=CHAR},
+      </if>
+      <if test="record.mprice != null" >
+        mprice = #{record.mprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.selfpercent != null" >
+        selfpercent = #{record.selfpercent,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update medicine
+    set mno = #{record.mno,jdbcType=INTEGER},
+      mname = #{record.mname,jdbcType=VARCHAR},
+      mstyle = #{record.mstyle,jdbcType=CHAR},
+      mprice = #{record.mprice,jdbcType=INTEGER},
+      selfpercent = #{record.selfpercent,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.swjd.pojo.Medicine" >
+    update medicine
+    <set >
+      <if test="mname != null" >
+        mname = #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="mstyle != null" >
+        mstyle = #{mstyle,jdbcType=CHAR},
+      </if>
+      <if test="mprice != null" >
+        mprice = #{mprice,jdbcType=INTEGER},
+      </if>
+      <if test="selfpercent != null" >
+        selfpercent = #{selfpercent,jdbcType=INTEGER},
+      </if>
+    </set>
+    where mno = #{mno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.swjd.pojo.Medicine" >
+    update medicine
+    set mname = #{mname,jdbcType=VARCHAR},
+      mstyle = #{mstyle,jdbcType=CHAR},
+      mprice = #{mprice,jdbcType=INTEGER},
+      selfpercent = #{selfpercent,jdbcType=INTEGER}
+    where mno = #{mno,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="storeamountMap" type="com.swjd.pojo.Medicine">
+        <id column="mno" property="mno" jdbcType="INTEGER" />
+        <result column="mname" property="mname" jdbcType="VARCHAR" />
+        <result column="mstyle" property="mstyle" jdbcType="CHAR" />
+        <result column="mprice" property="mprice" jdbcType="INTEGER" />
+        <result column="selfpercent" property="selfpercent" jdbcType="INTEGER" />
+        <collection property="storeamountList" ofType="com.swjd.pojo.Storeamount">
+            <id column="mno" property="mno" jdbcType="INTEGER" />
+            <id column="phno" property="phno" jdbcType="INTEGER" />
+            <result column="amount" property="amount" jdbcType="INTEGER" />
+            <collection property="pharmacyList" ofType="com.swjd.pojo.Pharmacy">
+                <id column="phno" property="phno" jdbcType="INTEGER" />
+                <result column="phname" property="phname" jdbcType="VARCHAR" />
+            </collection>
+        </collection>
+
+  </resultMap>
+
+  <select id="selectStoreamount" resultMap="storeamountMap" parameterType="com.swjd.pojo.MedicineExample">
+      SELECT *  FROM medicine ,storeamount ,pharmacy
+
+      <if test="_parameter != null" >
+         <include refid="Example_Where_Clause" />
+      </if>
+      <if test="orderByClause != null" >
+        order by ${orderByClause}
+      </if>
+       and medicine.`mno`=storeamount.`mno` AND pharmacy.`phno`=storeamount.`phno`
+  </select>
+</mapper>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swjd.mapper.FinancerecordMapper" >
+  <resultMap id="BaseResultMap" type="com.swjd.pojo.Financerecord" >
+    <result column="finance_no" property="financeNo" jdbcType="INTEGER" />
+    <result column="prescription_no" property="prescriptionNo" jdbcType="INTEGER" />
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="prescription_time" property="prescriptionTime" jdbcType="TIMESTAMP" />
+    <result column="apply_price" property="applyPrice" jdbcType="INTEGER" />
+    <result column="selfprice" property="selfprice" jdbcType="INTEGER" />
+    <result column="amountprice" property="amountprice" jdbcType="BIGINT" />
+    <result column="doctor_name" property="doctorName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    finance_no, prescription_no, student_name, prescription_time, apply_price, selfprice, 
+    amountprice, doctor_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.swjd.pojo.FinancerecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List"/>
+    from financerecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.swjd.pojo.FinancerecordExample" >
+    delete from financerecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.swjd.pojo.Financerecord" >
+    insert into financerecord (finance_no, prescription_no, student_name, 
+      prescription_time, apply_price, selfprice, 
+      amountprice, doctor_name)
+    values (#{financeNo,jdbcType=INTEGER}, #{prescriptionNo,jdbcType=INTEGER}, #{studentName,jdbcType=VARCHAR}, 
+      #{prescriptionTime,jdbcType=TIMESTAMP}, #{applyPrice,jdbcType=INTEGER}, #{selfprice,jdbcType=INTEGER}, 
+      #{amountprice,jdbcType=BIGINT}, #{doctorName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.swjd.pojo.Financerecord" >
+    insert into financerecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="financeNo != null" >
+        finance_no,
+      </if>
+      <if test="prescriptionNo != null" >
+        prescription_no,
+      </if>
+      <if test="studentName != null" >
+        student_name,
+      </if>
+      <if test="prescriptionTime != null" >
+        prescription_time,
+      </if>
+      <if test="applyPrice != null" >
+        apply_price,
+      </if>
+      <if test="selfprice != null" >
+        selfprice,
+      </if>
+      <if test="amountprice != null" >
+        amountprice,
+      </if>
+      <if test="doctorName != null" >
+        doctor_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="financeNo != null" >
+        #{financeNo,jdbcType=INTEGER},
+      </if>
+      <if test="prescriptionNo != null" >
+        #{prescriptionNo,jdbcType=INTEGER},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="prescriptionTime != null" >
+        #{prescriptionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyPrice != null" >
+        #{applyPrice,jdbcType=INTEGER},
+      </if>
+      <if test="selfprice != null" >
+        #{selfprice,jdbcType=INTEGER},
+      </if>
+      <if test="amountprice != null" >
+        #{amountprice,jdbcType=BIGINT},
+      </if>
+      <if test="doctorName != null" >
+        #{doctorName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.swjd.pojo.FinancerecordExample" resultType="java.lang.Integer" >
+    select count(*) from financerecord
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update financerecord
+    <set >
+      <if test="record.financeNo != null" >
+        finance_no = #{record.financeNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.prescriptionNo != null" >
+        prescription_no = #{record.prescriptionNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentName != null" >
+        student_name = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prescriptionTime != null" >
+        prescription_time = #{record.prescriptionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyPrice != null" >
+        apply_price = #{record.applyPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.selfprice != null" >
+        selfprice = #{record.selfprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.amountprice != null" >
+        amountprice = #{record.amountprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.doctorName != null" >
+        doctor_name = #{record.doctorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update financerecord
+    set finance_no = #{record.financeNo,jdbcType=INTEGER},
+      prescription_no = #{record.prescriptionNo,jdbcType=INTEGER},
+      student_name = #{record.studentName,jdbcType=VARCHAR},
+      prescription_time = #{record.prescriptionTime,jdbcType=TIMESTAMP},
+      apply_price = #{record.applyPrice,jdbcType=INTEGER},
+      selfprice = #{record.selfprice,jdbcType=INTEGER},
+      amountprice = #{record.amountprice,jdbcType=BIGINT},
+      doctor_name = #{record.doctorName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <select id="selectByFinanceNo" parameterType="java.lang.Integer" resultType="com.swjd.pojo.Financerecord">
+    SELECT finance_no,
+           prescription_no,
+           student_name,
+           prescription_time,
+           apply_price,
+           selfprice,
+           amountprice,
+           doctor_name
+    FROM financerecord
+    WHERE finance_no=#{financeNo}
+  </select>
+</mapper>

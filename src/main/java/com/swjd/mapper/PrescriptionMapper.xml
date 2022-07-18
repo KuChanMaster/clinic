@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.swjd.mapper.PrescriptionMapper" >
+  <resultMap id="BaseResultMap" type="com.swjd.pojo.Prescription" >
+    <id column="pno" property="pno" jdbcType="INTEGER" />
+    <result column="pdate" property="pdate" jdbcType="TIMESTAMP" />
+    <result column="sno" property="sno" jdbcType="INTEGER" />
+    <result column="dno" property="dno" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pno, pdate, sno, dno
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.swjd.pojo.PrescriptionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prescription
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from prescription
+    where pno = #{pno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from prescription
+    where pno = #{pno,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.swjd.pojo.PrescriptionExample" >
+    delete from prescription
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.swjd.pojo.Prescription" >
+    insert into prescription (pno, pdate, sno, 
+      dno)
+    values (#{pno,jdbcType=INTEGER}, #{pdate,jdbcType=TIMESTAMP}, #{sno,jdbcType=INTEGER}, 
+      #{dno,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.swjd.pojo.Prescription" >
+    insert into prescription
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pno != null" >
+        pno,
+      </if>
+      <if test="pdate != null" >
+        pdate,
+      </if>
+      <if test="sno != null" >
+        sno,
+      </if>
+      <if test="dno != null" >
+        dno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pno != null" >
+        #{pno,jdbcType=INTEGER},
+      </if>
+      <if test="pdate != null" >
+        #{pdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sno != null" >
+        #{sno,jdbcType=INTEGER},
+      </if>
+      <if test="dno != null" >
+        #{dno,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.swjd.pojo.PrescriptionExample" resultType="java.lang.Integer" >
+    select count(*) from prescription
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update prescription
+    <set >
+      <if test="record.pno != null" >
+        pno = #{record.pno,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdate != null" >
+        pdate = #{record.pdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sno != null" >
+        sno = #{record.sno,jdbcType=INTEGER},
+      </if>
+      <if test="record.dno != null" >
+        dno = #{record.dno,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update prescription
+    set pno = #{record.pno,jdbcType=INTEGER},
+      pdate = #{record.pdate,jdbcType=TIMESTAMP},
+      sno = #{record.sno,jdbcType=INTEGER},
+      dno = #{record.dno,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.swjd.pojo.Prescription" >
+    update prescription
+    <set >
+      <if test="pdate != null" >
+        pdate = #{pdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sno != null" >
+        sno = #{sno,jdbcType=INTEGER},
+      </if>
+      <if test="dno != null" >
+        dno = #{dno,jdbcType=INTEGER},
+      </if>
+    </set>
+    where pno = #{pno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.swjd.pojo.Prescription" >
+    update prescription
+    set pdate = #{pdate,jdbcType=TIMESTAMP},
+      sno = #{sno,jdbcType=INTEGER},
+      dno = #{dno,jdbcType=INTEGER}
+    where pno = #{pno,jdbcType=INTEGER}
+  </update>
+
+  <resultMap id="prescriptionResult" type="com.swjd.pojo.Prescription">
+      <id column="pno" property="pno"/>
+      <result column="pdate" property="pdate"/>
+    <association property="doctor" javaType="com.swjd.pojo.Doctor">
+      <id column="dname" property="dname"/>
+      <result column="phone" property="phone"/>
+      <result column="phone" property="phone"/>
+    </association>
+    <association property="student" javaType="com.swjd.pojo.Student">
+        <id column="sn" property="sname"></id>
+<!--        <result property=""-->
+    </association>
+
+  </resultMap>
+  <select id="findAll" resultMap="prescriptionResult">
+    SELECT s.`sn`,s.`sname`,
+           s.`phone`,d.`dname`,
+           p.`dno`,p.`pdate`,
+           pd.`mno`,pd.`pdetail`,
+           pd.`count`,pd.`pno`,
+           m.`mname`,m.`mprice`,
+           m.`mprice`*pd.`count` AS total FROM                                                                                                                                               student s,doctor d,prescription p,pdetail pd,medicine m
+    WHERE p.sno=s.`sn` AND p.`dno`=d.`dno` AND pd.`mno`=m.`mno` AND pd.`pno`=p.`pno`
+  </select>
+</mapper>
